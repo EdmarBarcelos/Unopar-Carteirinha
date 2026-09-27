@@ -1,11 +1,9 @@
-html<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Unopar Wallet</title>
-    <!-- Vinculação do Manifesto do App -->
-    <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0b0f19">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -98,7 +96,7 @@ html<!DOCTYPE html>
             backface-visibility: hidden;
             border-radius: 14px;
             padding: 18px;
-            background: linear-gradient(135deg, #004b87 0%, #002f5c 100%);
+            background: linear-gradient(135deg, #0d5ca3 0%, #06396e 100%);
             border: 1px solid #00569d;
             box-shadow: 0 8px 16px rgba(0,0,0,0.4);
             overflow: hidden;
@@ -107,17 +105,18 @@ html<!DOCTYPE html>
             justify-content: space-between;
         }
 
+        /* Linhas vermelhas idênticas ao design original da Unopar */
         .unopar-card::before {
             content: "";
             position: absolute;
-            top: 40%;
-            left: -10%;
-            width: 120%;
-            height: 80%;
-            border: 2px solid rgba(239, 68, 68, 0.35);
+            top: 25%;
+            left: -15%;
+            width: 130%;
+            height: 90%;
+            border: 2px solid rgba(225, 29, 72, 0.7);
             border-radius: 40px;
             pointer-events: none;
-            transform: rotate(-15deg);
+            transform: rotate(-12deg);
         }
 
         .card-back {
@@ -151,23 +150,24 @@ html<!DOCTYPE html>
             position: absolute;
             top: 18px;
             right: 18px;
-            width: 65px;
-            height: 80px;
-            border: 1px solid rgba(255,255,255,0.4);
-            background-color: #cbd5e1;
+            width: 72px;
+            height: 90px;
+            border: 1px solid rgba(255,255,255,0.5);
             background-size: cover;
             background-position: center;
-            z-index: 2;
-            border-radius: 2px;
+            background-repeat: no-repeat;
+            z-index: 5;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
         .vertical-text {
             position: absolute;
-            right: -35px;
-            top: 45%;
+            right: -42px;
+            top: 40%;
             transform: rotate(-90deg);
-            font-size: 0.45rem;
-            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.4rem;
+            color: rgba(255, 255, 255, 0.7);
             letter-spacing: 0.5px;
             text-transform: uppercase;
             white-space: nowrap;
@@ -201,8 +201,9 @@ html<!DOCTYPE html>
             flex-direction: column;
             align-items: flex-end;
             font-size: 0.55rem;
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.9);
             z-index: 2;
+            margin-top: 4px;
         }
 
         .qrcode-container {
@@ -211,22 +212,16 @@ html<!DOCTYPE html>
             align-items: center;
             justify-content: center;
             height: 100%;
-            gap: 8px;
+            margin-top: 10px;
             z-index: 2;
         }
 
-        .qr-code-placeholder {
-            width: 95px;
-            height: 95px;
+        .qr-code-img {
+            width: 90px;
+            height: 90px;
             background: white;
-            padding: 5px;
+            padding: 4px;
             border-radius: 4px;
-        }
-
-        .qr-subtext {
-            font-size: 0.45rem;
-            color: rgba(255,255,255,0.7);
-            text-transform: uppercase;
         }
 
         .tip-tap {
@@ -234,6 +229,7 @@ html<!DOCTYPE html>
             font-size: 0.65rem;
             color: #6b7280;
             margin-bottom: 15px;
+            margin-top: 4px;
         }
 
         .static-card {
@@ -261,17 +257,20 @@ html<!DOCTYPE html>
             <p>Carteira Estudantil Digital</p>
         </div>
 
-        <div class="section-title">Carteirinha 1 (Frente / Verso)</div>
+        <div class="section-title">Carteirinha 1 (Toque para ver o verso)</div>
         <div class="flip-card" onclick="toggleCard(this)">
             <div class="flip-card-inner">
-                <!-- FRENTE: Software -->
+                
+                <!-- FRENTE: Engenharia de Software -->
                 <div class="unopar-card card-front">
                     <div class="logo-container">
                         <span class="logo-u">U</span>
                         <span class="logo-text">unopar</span>
                     </div>
-                    <!-- Insira o link da sua foto real aqui se quiser -->
-                    <div class="profile-photo" style="background-image: url('https://placeholder.com');"></div>
+                    
+                    <!-- FOTO DE ENGENHARIA DE SOFTWARE CONVERTIDA EM TEXTO (BASE64) -->
+                    <div class="profile-photo" style="background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABaCAYAAAD9S6WvAAAACXBIWXMAAAsTAAALEwEAmpwYAAAD00lEQVR4nO2by4scVRSFv9vTMz0zScaMSuIkGvMwwSgSREzMoAtFEXEnuHBpXbgVwY0bceUPMAsXgSgYg7gSg6IuBHeCisSgSTT6mIemZ6b79twu6tS0vbunp7tnGvX7wKDr3lu3v1v3nnvO7VpSSgYf69YALgSg9UAArAcCYD0QAOuBAFgPBMD6wSgADw0e3I6pDyw6oEwSgK6w7gB7p6FMAoCuMDcAtgP9YAyAhZgXgO1APxgF4N6f6v863w+2D8YAmD7f+77X7wfbB8MALC6+tveX9v36wSgAj2Tvd+P3veD6wSgA/8u6R9uBfjAMwPezN9oB9YPhAO68vXdfmP3bDuwGw38pP/h7wP7K7Oun9v4Gg8F7+78ffN9bA3h60QF9bWn3fDNo9w8C4H/aXbN9v36wexAWB880gxsMBpdmv/S1p2bv+vH7wTgAn8g+6Abv+95w8NThetZff2bHwYfT5/vBOGehz2fveq0f6AejXOHZ6fvd4C333Z077l663w2X0p7752w/H+gHowCsy890w6/SzZ9060699p6gW/f9Iu7H/WAUgEvZ/XwI1rJ7+xD9P/9fP9Cth/lA6AejAFwv6eYv2l0XgqVsfTf886f67v79wK6D9bF5PxgHYF0Zgl6YfS6MAdDXfKOfL8DywvD+Xw+X9/eDcQDmS7Y2P6P9tWw9r9f6+WzthfV8rR9sv9f6fA7pA6MArMtzfTdfguV6v8CyzfW+bHO9bH1+tvbCuhfWvf3e67m+bH0fGAfguenrwfXC+ty0m8/XfE/ZfC6see6FsF7Srfv6gV0HG9vXg3EA5pXmD4b1fAitV+q1+RAtN/IDNrfyAzWf66vM1+ZDMB8Ih993A398YfMAnpv+q68XwtoA9LXmY7w2N9/orvV/Z+8bA2BvSffu6p67m3MhrM1Ne2Htc88998L69txLw6f9vRBaI6C6O6V0+O70S0GvNo/vFwS97fXf9Xv9wK6Dn9u27uvg79H6YByAdXlhvRBCu7bW6I6f6/NqffG+r/Xa+u96ofV9b7v5Gq2P6VwPjAOwn8v5fshv0l0P8/1oX6X1pfx7W99b6/fDdrD/758Xg8GgXvFpY7sXWq/ZunX9wE65bL6E9X68P9wPrQfW/YHzVbL1W+XzVfn29/zWf9f3g6zXWf7D9eM+wWc07oHshw7re6E6v9m8InYftXof7vT6v7mvrwVq3N8I8LwZfM8wHwFm3B3D9UOf9F8A9Z7T+nO5fU7u0696eO2b7pUvbu6V6V/V+tK9W966pft+te9Wp3tV0rnf6P9gW+v9m/7S7V93T9ZbuwSnd6fP9YIxtAasDALAeCID1QACsBwJgPRAA64EAWBcB8K/f8/4A8fC9pB6Ait0AAAAASUVORK5CYII=');"></div>
+                    
                     <div class="vertical-text">Este cartão é pessoal e intransferível</div>
                     
                     <div class="card-info">
@@ -285,41 +284,10 @@ html<!DOCTYPE html>
                     </div>
                 </div>
 
-                <!-- VERSO: QR Code -->
+                <!-- VERSO: QR Code Original -->
                 <div class="unopar-card card-back">
                     <div class="logo-container">
                         <span class="logo-u">U</span>
                         <span class="logo-text">unopar</span>
                     </div>
                     <div class="qrcode-container">
-                        <img class="qr-code-placeholder" src="https://qrserver.com" alt="QR Code">
-                        <div class="qr-subtext">Acesse para validação institucional</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="tip-tap">💡 Toque no cartão para virar</div>
-
-        <div class="section-title">Carteirinha 2</div>
-        <!-- CARTEIRINHA 2: Matemática -->
-        <div class="unopar-card static-card">
-            <div class="logo-container">
-                <span class="logo-u">U</span>
-                <span class="logo-text">unopar</span>
-            </div>
-            <div class="profile-photo" style="background-image: url('https://placeholder.com');"></div>
-            <div class="vertical-text">Este cartão é pessoal e intransferível</div>
-            
-            <div class="card-info">
-                <div class="student-name" style="color: #60a5fa; font-size: 0.8rem;">EDMAR</div>
-                <div class="student-name">Edmar Elias Barcelos</div>
-                <div class="student-ra">RA 3855767404</div>
-                <div class="student-course">MATEMÁTICA - LICENCIATURA</div>
-                <div class="card-footer-data">
-                    <div>CPF: 012.313.306-86</div>
-                    <div>VALIDADE: JUL a DEZ de 2026</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="disclaimer">
