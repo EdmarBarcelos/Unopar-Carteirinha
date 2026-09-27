@@ -1,293 +1,677 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Unopar Wallet</title>
-    <meta name="theme-color" content="#0b0f19">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#07589a">
+<title>Carteirinha Estudantil</title>
 
-        body {
-            background-color: #0b0f19;
-            color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            padding: 15px;
-        }
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
+}
 
-        .app-container {
-            width: 100%;
-            max-width: 380px;
-            background: #111827;
-            border-radius: 24px;
-            padding: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
-            border: 1px solid #1f2937;
-            margin-bottom: 30px;
-        }
+body{
+    min-height:100vh;
+    background:#071d31;
+    font-family:Arial,Helvetica,sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
+    overflow-x:hidden;
+}
 
-        .header {
-            margin-bottom: 20px;
-            text-align: center;
-            border-bottom: 1px solid #1f2937;
-            padding-bottom: 15px;
-        }
+.app{
+    width:100%;
+    max-width:480px;
+    min-height:100vh;
+    padding:22px 15px 30px;
+    background:linear-gradient(180deg,#061d31,#082b46);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
 
-        .header h1 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #00a3e0;
-            letter-spacing: 1px;
-        }
+.topo{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
 
-        .header p {
-            font-size: 0.75rem;
-            color: #9ca3af;
-            margin-top: 2px;
-        }
+.logo{
+    font-size:27px;
+    font-weight:bold;
+    letter-spacing:-1px;
+}
 
-        .section-title {
-            font-size: 0.8rem;
-            color: #9ca3af;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            margin-top: 15px;
-            font-weight: 600;
-        }
+.logo span{
+    display:block;
+    font-size:13px;
+    font-weight:normal;
+    letter-spacing:1px;
+    margin-top:-2px;
+}
 
-        .flip-card {
-            background-color: transparent;
-            width: 100%;
-            height: 220px;
-            perspective: 1000px;
-            cursor: pointer;
-            margin-bottom: 8px;
-        }
+.titulo{
+    text-align:right;
+}
 
-        .flip-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-style: preserve-3d;
-        }
+.titulo strong{
+    display:block;
+    font-size:16px;
+}
 
-        .flip-card.active .flip-card-inner {
-            transform: rotateY(180deg);
-        }
+.titulo small{
+    font-size:11px;
+    opacity:.75;
+}
 
-        .unopar-card {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            border-radius: 14px;
-            padding: 18px;
-            background: linear-gradient(135deg, #0d5ca3 0%, #06396e 100%);
-            border: 1px solid #00569d;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+.carteira-area{
+    width:100%;
+    perspective:1200px;
+}
 
-        /* Linhas vermelhas idênticas ao design original da Unopar */
-        .unopar-card::before {
-            content: "";
-            position: absolute;
-            top: 25%;
-            left: -15%;
-            width: 130%;
-            height: 90%;
-            border: 2px solid rgba(225, 29, 72, 0.7);
-            border-radius: 40px;
-            pointer-events: none;
-            transform: rotate(-12deg);
-        }
+.carteira{
+    width:100%;
+    aspect-ratio:1.586;
+    position:relative;
+    transform-style:preserve-3d;
+    transition:transform .7s ease;
+    cursor:pointer;
+}
 
-        .card-back {
-            transform: rotateY(180deg);
-        }
+.carteira.virada{
+    transform:rotateY(180deg);
+}
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            z-index: 2;
-        }
+.face{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    border-radius:17px;
+    overflow:hidden;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.45),
+        inset 0 0 0 1px rgba(255,255,255,.18);
+    background:
+        linear-gradient(135deg,#064d83,#0c70ad 55%,#075b91);
+}
 
-        .logo-u {
-            font-weight: 900;
-            font-size: 1.4rem;
-            color: #ffffff;
-            border: 2.5px solid #ffffff;
-            padding: 0px 5px;
-            line-height: 1.1;
-            border-radius: 3px;
-        }
+.face:before{
+    content:"";
+    position:absolute;
+    width:125%;
+    height:180%;
+    left:-20%;
+    top:15%;
+    border:4px solid #ed1c2e;
+    border-radius:80px;
+    transform:rotate(-13deg);
+    opacity:.95;
+}
 
-        .logo-text {
-            font-size: 0.8rem;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-        }
+.face:after{
+    content:"";
+    position:absolute;
+    width:80%;
+    height:150%;
+    left:35%;
+    top:10%;
+    border:4px solid #ed1c2e;
+    border-radius:70px;
+    transform:rotate(-13deg);
+    opacity:.9;
+}
 
-        .profile-photo {
-            position: absolute;
-            top: 18px;
-            right: 18px;
-            width: 72px;
-            height: 90px;
-            border: 1px solid rgba(255,255,255,0.5);
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            z-index: 5;
-            border-radius: 4px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-        }
+.conteudo{
+    position:absolute;
+    inset:0;
+    z-index:5;
+    padding:22px;
+}
 
-        .vertical-text {
-            position: absolute;
-            right: -42px;
-            top: 40%;
-            transform: rotate(-90deg);
-            font-size: 0.4rem;
-            color: rgba(255, 255, 255, 0.7);
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            white-space: nowrap;
-        }
+.marca{
+    font-size:26px;
+    font-weight:800;
+    letter-spacing:-1px;
+}
 
-        .card-info {
-            z-index: 2;
-            margin-top: auto;
-        }
+.marca-sub{
+    font-size:10px;
+    letter-spacing:.5px;
+    margin-top:-2px;
+}
 
-        .student-name {
-            font-size: 0.9rem;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            margin-bottom: 2px;
-        }
+.tipo{
+    position:absolute;
+    right:17px;
+    top:16px;
+    writing-mode:vertical-rl;
+    transform:rotate(180deg);
+    font-size:8px;
+    letter-spacing:1px;
+    font-weight:bold;
+    opacity:.9;
+}
 
-        .student-ra, .student-course {
-            font-size: 0.75rem;
-            color: #ffffff;
-            margin-bottom: 2px;
-        }
+.foto{
+    position:absolute;
+    left:50%;
+    top:28%;
+    transform:translateX(-50%);
+    width:31%;
+    aspect-ratio:3/4;
+    object-fit:cover;
+    border-radius:9px;
+    border:2px solid rgba(255,255,255,.9);
+    box-shadow:0 6px 18px rgba(0,0,0,.3);
+    background:#ddd;
+}
 
-        .student-course {
-            font-weight: 600;
-        }
+.dados{
+    position:absolute;
+    left:5%;
+    right:5%;
+    bottom:9%;
+    text-align:center;
+}
 
-        .card-footer-data {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            font-size: 0.55rem;
-            color: rgba(255, 255, 255, 0.9);
-            z-index: 2;
-            margin-top: 4px;
-        }
+.nome{
+    font-size:17px;
+    font-weight:bold;
+    margin-bottom:7px;
+}
 
-        .qrcode-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            margin-top: 10px;
-            z-index: 2;
-        }
+.info{
+    font-size:11px;
+    font-weight:bold;
+    line-height:1.55;
+}
 
-        .qr-code-img {
-            width: 90px;
-            height: 90px;
-            background: white;
-            padding: 4px;
-            border-radius: 4px;
-        }
+.validade{
+    margin-top:5px;
+    font-size:9px;
+    font-weight:bold;
+}
 
-        .tip-tap {
-            text-align: center;
-            font-size: 0.65rem;
-            color: #6b7280;
-            margin-bottom: 15px;
-            margin-top: 4px;
-        }
+.verso{
+    transform:rotateY(180deg);
+}
 
-        .static-card {
-            position: relative;
-            width: 100%;
-            height: 220px;
-        }
+.verso .conteudo{
+    padding:24px;
+}
 
-        .disclaimer {
-            font-size: 0.6rem;
-            color: #4b5563;
-            text-align: center;
-            margin-top: 20px;
-            line-height: 1.4;
-            border-top: 1px solid #1f2937;
-            padding-top: 12px;
-        }
-    </style>
+.verso-titulo{
+    text-align:center;
+    font-size:13px;
+    font-weight:bold;
+    margin-top:4px;
+}
+
+.qr{
+    position:absolute;
+    width:32%;
+    aspect-ratio:1;
+    object-fit:contain;
+    background:#fff;
+    padding:5px;
+    border-radius:5px;
+    left:50%;
+    top:25%;
+    transform:translateX(-50%);
+}
+
+.codigo{
+    position:absolute;
+    left:8%;
+    right:8%;
+    bottom:18%;
+    text-align:center;
+    font-size:9px;
+    line-height:1.5;
+    font-weight:bold;
+}
+
+.instrucoes{
+    margin-top:22px;
+    text-align:center;
+    color:#d9e9f5;
+    font-size:12px;
+}
+
+.botoes{
+    display:flex;
+    gap:10px;
+    width:100%;
+    margin-top:17px;
+}
+
+button{
+    flex:1;
+    border:0;
+    border-radius:12px;
+    padding:13px 10px;
+    background:#0874b9;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 5px 15px rgba(0,0,0,.25);
+}
+
+button:active{
+    transform:scale(.97);
+}
+
+.seletor{
+    display:flex;
+    gap:8px;
+    width:100%;
+    margin-top:20px;
+}
+
+.seletor button{
+    background:#123b58;
+    border:1px solid rgba(255,255,255,.15);
+}
+
+.seletor button.ativo{
+    background:#087bc5;
+}
+
+.aviso{
+    margin-top:15px;
+    font-size:9px;
+    text-align:center;
+    opacity:.55;
+    line-height:1.4;
+}
+
+/* Ajustes para celulares pequenos */
+@media(max-width:360px){
+    .app{
+        padding:15px 10px 25px;
+    }
+
+    .conteudo{
+        padding:17px;
+    }
+
+    .marca{
+        font-size:22px;
+    }
+
+    .nome{
+        font-size:14px;
+    }
+
+    .info{
+        font-size:9px;
+    }
+}
+</style>
 </head>
+
 <body>
 
-    <div class="app-container">
-        <div class="header">
-            <h1>UNOPAR WALLET</h1>
-            <p>Carteira Estudantil Digital</p>
+<div class="app">
+
+    <div class="topo">
+        <div class="logo">
+            U
+            <span>unopar</span>
         </div>
 
-        <div class="section-title">Carteirinha 1 (Toque para ver o verso)</div>
-        <div class="flip-card" onclick="toggleCard(this)">
-            <div class="flip-card-inner">
-                
-                <!-- FRENTE: Engenharia de Software -->
-                <div class="unopar-card card-front">
-                    <div class="logo-container">
-                        <span class="logo-u">U</span>
-                        <span class="logo-text">unopar</span>
-                    </div>
-                    
-                    <!-- FOTO DE ENGENHARIA DE SOFTWARE CONVERTIDA EM TEXTO (BASE64) -->
-                    <div class="profile-photo" style="background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABaCAYAAAD9S6WvAAAACXBIWXMAAAsTAAALEwEAmpwYAAAD00lEQVR4nO2by4scVRSFv9vTMz0zScaMSuIkGvMwwSgSREzMoAtFEXEnuHBpXbgVwY0bceUPMAsXgSgYg7gSg6IuBHeCisSgSTT6mIemZ6b79twu6tS0vbunp7tnGvX7wKDr3lu3v1v3nnvO7VpSSgYf69YALgSg9UAArAcCYD0QAOuBAFgPBMD6wSgADw0e3I6pDyw6oEwSgK6w7gB7p6FMAoCuMDcAtgP9YAyAhZgXgO1APxgF4N6f6v863w+2D8YAmD7f+77X7wfbB8MALC6+tveX9v36wSgAj2Tvd+P3veD6wSgA/8u6R9uBfjAMwPezN9oB9YPhAO68vXdfmP3bDuwGw38pP/h7wP7K7Oun9v4Gg8F7+78ffN9bA3h60QF9bWn3fDNo9w8C4H/aXbN9v36wexAWB880gxsMBpdmv/S1p2bv+vH7wTgAn8g+6Abv+95w8NThetZff2bHwYfT5/vBOGehz2fveq0f6AejXOHZ6fvd4C333Z077l663w2X0p7752w/H+gHowCsy890w6/SzZ9060699p6gW/f9Iu7H/WAUgEvZ/XwI1rJ7+xD9P/9fP9Cth/lA6AejAFwv6eYv2l0XgqVsfTf886f67v79wK6D9bF5PxgHYF0Zgl6YfS6MAdDXfKOfL8DywvD+Xw+X9/eDcQDmS7Y2P6P9tWw9r9f6+WzthfV8rR9sv9f6fA7pA6MArMtzfTdfguV6v8CyzfW+bHO9bH1+tvbCuhfWvf3e67m+bH0fGAfguenrwfXC+ty0m8/XfE/ZfC6see6FsF7Srfv6gV0HG9vXg3EA5pXmD4b1fAitV+q1+RAtN/IDNrfyAzWf66vM1+ZDMB8Ih993A398YfMAnpv+q68XwtoA9LXmY7w2N9/orvV/Z+8bA2BvSffu6p67m3MhrM1Ne2Htc88998L69txLw6f9vRBaI6C6O6V0+O70S0GvNo/vFwS97fXf9Xv9wK6Dn9u27uvg79H6YByAdXlhvRBCu7bW6I6f6/NqffG+r/Xa+u96ofV9b7v5Gq2P6VwPjAOwn8v5fshv0l0P8/1oX6X1pfx7W99b6/fDdrD/758Xg8GgXvFpY7sXWq/ZunX9wE65bL6E9X68P9wPrQfW/YHzVbL1W+XzVfn29/zWf9f3g6zXWf7D9eM+wWc07oHshw7re6E6v9m8InYftXof7vT6v7mvrwVq3N8I8LwZfM8wHwFm3B3D9UOf9F8A9Z7T+nO5fU7u0696eO2b7pUvbu6V6V/V+tK9W966pft+te9Wp3tV0rnf6P9gW+v9m/7S7V93T9ZbuwSnd6fP9YIxtAasDALAeCID1QACsBwJgPRAA64EAWBcB8K/f8/4A8fC9pB6Ait0AAAAASUVORK5CYII=');"></div>
-                    
-                    <div class="vertical-text">Este cartão é pessoal e intransferível</div>
-                    
-                    <div class="card-info">
-                        <div class="student-name">Edmar Elias Barcelos</div>
-                        <div class="student-ra">RA 2026463482</div>
-                        <div class="student-course">ENGENHARIA DE SOFTWARE</div>
-                        <div class="card-footer-data">
-                            <div>CPF: 012.313.306-86</div>
-                            <div>VALIDADE: jun 2027</div>
-                        </div>
-                    </div>
-                </div>
+        <div class="titulo">
+            <strong>CARTEIRINHA</strong>
+            <small>ESTUDANTIL DIGITAL</small>
+        </div>
+    </div>
 
-                <!-- VERSO: QR Code Original -->
-                <div class="unopar-card card-back">
-                    <div class="logo-container">
-                        <span class="logo-u">U</span>
-                        <span class="logo-text">unopar</span>
+    <!-- CARTEIRA -->
+    <div class="carteira-area">
+
+        <div class="carteira" id="carteira">
+
+            <!-- =========================
+                 CARTEIRINHA 1 - FRENTE
+                 ENGENHARIA DE SOFTWARE
+                 ========================= -->
+            <section class="face frente">
+
+                <div class="conteudo">
+
+                    <div class="marca">
+                        U
+                        <div class="marca-sub">unopar</div>
                     </div>
-                    <div class="qrcode-container">
+
+                    <div class="tipo">
+                        ESTE CARTÃO É PESSOAL E INTRANSFERÍVEL
+                    </div>
+
+                    <!--
+                    COLOQUE SUA FOTO NO GITHUB COM O NOME:
+                    foto-edmar.jpg
+
+                    Exemplo:
+                    /assets/foto-edmar.jpg
+                    -->
+                    <img
+                        class="foto"
+                        src="assets/foto-edmar.jpg"
+                        alt="Foto do estudante"
+                        onerror="this.src='foto-edmar.jpg';"
+                    >
+
+                    <div class="dados">
+
+                        <div class="nome">
+                            EDMAR ELIAS BARCELOS
+                        </div>
+
+                        <div class="info">
+                            RA 2026463482<br>
+                            ENGENHARIA DE SOFTWARE<br>
+                            CPF 012.313.306-86
+                        </div>
+
+                        <div class="validade">
+                            VALIDADE: JUL A DEZ DE 2027
+                        </div>
+
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- =========================
+                 CARTEIRINHA 1 - VERSO
+                 ========================= -->
+            <section class="face verso">
+
+                <div class="conteudo">
+
+                    <div class="marca">
+                        U
+                        <div class="marca-sub">unopar</div>
+                    </div>
+
+                    <div class="tipo">
+                        ESTE CARTÃO É PESSOAL E INTRANSFERÍVEL
+                    </div>
+
+                    <div class="verso-titulo">
+                        VALIDAÇÃO DA CARTEIRINHA
+                    </div>
+
+                    <!--
+                    COLOQUE O QR CODE NO GITHUB COM O NOME:
+                    qrcode-engenharia.png
+
+                    O QR CODE precisa estar dentro da pasta:
+                    assets/
+                    -->
+                    <img
+                        class="qr"
+                        src="assets/qrcode-engenharia.png"
+                        alt="QR Code da carteirinha"
+                        onerror="this.src='qrcode-engenharia.png';"
+                    >
+
+                    <div class="codigo">
+                        ESCANEIE O QR CODE PARA CONSULTAR<br>
+                        A VALIDADE E OS DADOS DA CARTEIRINHA
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+
+    <div class="instrucoes">
+        Toque na carteirinha para visualizar o verso
+    </div>
+
+    <div class="botoes">
+        <button onclick="virarCarteira()">
+            ↻ Frente / Verso
+        </button>
+
+        <button onclick="telaCheia()">
+            ⛶ Tela cheia
+        </button>
+    </div>
+
+
+    <!-- =========================
+         SEGUNDA CARTEIRINHA
+         MATEMÁTICA - LICENCIATURA
+         ========================= -->
+
+    <div class="seletor">
+
+        <button
+            id="btnEngenharia"
+            class="ativo"
+            onclick="mostrarCarteira('engenharia')">
+            Engenharia
+        </button>
+
+        <button
+            id="btnMatematica"
+            onclick="mostrarCarteira('matematica')">
+            Matemática
+        </button>
+
+    </div>
+
+
+    <div id="matematica" style="display:none;width:100%;margin-top:18px;">
+
+        <div class="carteira-area">
+
+            <div class="carteira" id="carteiraMatematica">
+
+                <!-- FRENTE MATEMÁTICA -->
+                <section class="face frente">
+
+                    <div class="conteudo">
+
+                        <div class="marca">
+                            U
+                            <div class="marca-sub">unopar</div>
+                        </div>
+
+                        <div class="tipo">
+                            ESTE CARTÃO É PESSOAL E INTRANSFERÍVEL
+                        </div>
+
+                        <img
+                            class="foto"
+                            src="assets/foto-edmar.jpg"
+                            alt="Foto do estudante"
+                            onerror="this.src='foto-edmar.jpg';"
+                        >
+
+                        <div class="dados">
+
+                            <div class="nome">
+                                EDMAR ELIAS BARCELOS
+                            </div>
+
+                            <div class="info">
+                                RA 3855767404<br>
+                                MATEMÁTICA - LICENCIATURA<br>
+                                CPF 012.313.306-86
+                            </div>
+
+                            <div class="validade">
+                                VALIDADE: JUL A DEZ DE 2026
+                            </div>
+
+                        </div>
+
+                    </div>
+                </section>
+
+
+                <!-- VERSO MATEMÁTICA -->
+                <section class="face verso">
+
+                    <div class="conteudo">
+
+                        <div class="marca">
+                            U
+                            <div class="marca-sub">unopar</div>
+                        </div>
+
+                        <div class="tipo">
+                            ESTE CARTÃO É PESSOAL E INTRANSFERÍVEL
+                        </div>
+
+                        <div class="verso-titulo">
+                            VALIDAÇÃO DA CARTEIRINHA
+                        </div>
+
+                        <img
+                            class="qr"
+                            src="assets/qrcode-matematica.png"
+                            alt="QR Code da carteirinha"
+                            onerror="this.src='qrcode-matematica.png';"
+                        >
+
+                        <div class="codigo">
+                            ESCANEIE O QR CODE PARA CONSULTAR<br>
+                            A VALIDADE E OS DADOS DA CARTEIRINHA
+                        </div>
+
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <div class="instrucoes">
+            Toque na carteirinha para visualizar o verso
+        </div>
+
+        <button
+            style="width:100%;margin-top:15px;"
+            onclick="document.getElementById('carteiraMatematica').classList.toggle('virada')">
+            ↻ Frente / Verso
+        </button>
+
+    </div>
+
+
+    <div class="aviso">
+        Carteirinha digital para apresentação no celular.
+    </div>
+
+</div>
+
+
+<script>
+
+const carteira = document.getElementById("carteira");
+
+function virarCarteira(){
+    carteira.classList.toggle("virada");
+}
+
+carteira.addEventListener("click", function(){
+    carteira.classList.toggle("virada");
+});
+
+
+function mostrarCarteira(tipo){
+
+    const engenharia = document.getElementById("carteira").parentElement.parentElement;
+    const matematica = document.getElementById("matematica");
+
+    const btnEngenharia = document.getElementById("btnEngenharia");
+    const btnMatematica = document.getElementById("btnMatematica");
+
+    if(tipo === "engenharia"){
+
+        engenharia.style.display = "block";
+        matematica.style.display = "none";
+
+        btnEngenharia.classList.add("ativo");
+        btnMatematica.classList.remove("ativo");
+
+    }else{
+
+        engenharia.style.display = "none";
+        matematica.style.display = "block";
+
+        btnEngenharia.classList.remove("ativo");
+        btnMatematica.classList.add("ativo");
+
+    }
+}
+
+
+function telaCheia(){
+
+    if(!document.fullscreenElement){
+
+        if(document.documentElement.requestFullscreen){
+            document.documentElement.requestFullscreen();
+        }
+
+    }else{
+
+        if(document.exitFullscreen){
+            document.exitFullscreen();
+        }
+
+    }
+
+}
+
+
+/* Permite virar a carteirinha arrastando o dedo */
+let inicioX = 0;
+
+document.addEventListener("touchstart", function(e){
+
+    inicioX = e.touches[0].clientX;
+
+},{passive:true});
+
+
+document.addEventListener("touchend", function(e){
+
+    const fimX = e.changedTouches[0].clientX;
+    const diferenca = fimX - inicioX;
+
+    if(Math.abs(diferenca) > 60){
+
+        if(diferenca < 0){
+            carteira.classList.add("virada");
+        }else{
+            carteira.classList.remove("virada");
+        }
+
+    }
+
+},{passive:true});
+
+</script>
+
+</body>
+</html>
