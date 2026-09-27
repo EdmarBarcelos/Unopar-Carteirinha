@@ -1,0 +1,325 @@
+html<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Unopar Wallet</title>
+    <!-- Vinculação do Manifesto do App -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0b0f19">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #0b0f19;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 15px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 380px;
+            background: #111827;
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+            border: 1px solid #1f2937;
+            margin-bottom: 30px;
+        }
+
+        .header {
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 1px solid #1f2937;
+            padding-bottom: 15px;
+        }
+
+        .header h1 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #00a3e0;
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            font-size: 0.75rem;
+            color: #9ca3af;
+            margin-top: 2px;
+        }
+
+        .section-title {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            width: 100%;
+            height: 220px;
+            perspective: 1000px;
+            cursor: pointer;
+            margin-bottom: 8px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flip-card.active .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .unopar-card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 14px;
+            padding: 18px;
+            background: linear-gradient(135deg, #004b87 0%, #002f5c 100%);
+            border: 1px solid #00569d;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .unopar-card::before {
+            content: "";
+            position: absolute;
+            top: 40%;
+            left: -10%;
+            width: 120%;
+            height: 80%;
+            border: 2px solid rgba(239, 68, 68, 0.35);
+            border-radius: 40px;
+            pointer-events: none;
+            transform: rotate(-15deg);
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            z-index: 2;
+        }
+
+        .logo-u {
+            font-weight: 900;
+            font-size: 1.4rem;
+            color: #ffffff;
+            border: 2.5px solid #ffffff;
+            padding: 0px 5px;
+            line-height: 1.1;
+            border-radius: 3px;
+        }
+
+        .logo-text {
+            font-size: 0.8rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .profile-photo {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 65px;
+            height: 80px;
+            border: 1px solid rgba(255,255,255,0.4);
+            background-color: #cbd5e1;
+            background-size: cover;
+            background-position: center;
+            z-index: 2;
+            border-radius: 2px;
+        }
+
+        .vertical-text {
+            position: absolute;
+            right: -35px;
+            top: 45%;
+            transform: rotate(-90deg);
+            font-size: 0.45rem;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .card-info {
+            z-index: 2;
+            margin-top: auto;
+        }
+
+        .student-name {
+            font-size: 0.9rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .student-ra, .student-course {
+            font-size: 0.75rem;
+            color: #ffffff;
+            margin-bottom: 2px;
+        }
+
+        .student-course {
+            font-weight: 600;
+        }
+
+        .card-footer-data {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            font-size: 0.55rem;
+            color: rgba(255, 255, 255, 0.8);
+            z-index: 2;
+        }
+
+        .qrcode-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            gap: 8px;
+            z-index: 2;
+        }
+
+        .qr-code-placeholder {
+            width: 95px;
+            height: 95px;
+            background: white;
+            padding: 5px;
+            border-radius: 4px;
+        }
+
+        .qr-subtext {
+            font-size: 0.45rem;
+            color: rgba(255,255,255,0.7);
+            text-transform: uppercase;
+        }
+
+        .tip-tap {
+            text-align: center;
+            font-size: 0.65rem;
+            color: #6b7280;
+            margin-bottom: 15px;
+        }
+
+        .static-card {
+            position: relative;
+            width: 100%;
+            height: 220px;
+        }
+
+        .disclaimer {
+            font-size: 0.6rem;
+            color: #4b5563;
+            text-align: center;
+            margin-top: 20px;
+            line-height: 1.4;
+            border-top: 1px solid #1f2937;
+            padding-top: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="header">
+            <h1>UNOPAR WALLET</h1>
+            <p>Carteira Estudantil Digital</p>
+        </div>
+
+        <div class="section-title">Carteirinha 1 (Frente / Verso)</div>
+        <div class="flip-card" onclick="toggleCard(this)">
+            <div class="flip-card-inner">
+                <!-- FRENTE: Software -->
+                <div class="unopar-card card-front">
+                    <div class="logo-container">
+                        <span class="logo-u">U</span>
+                        <span class="logo-text">unopar</span>
+                    </div>
+                    <!-- Insira o link da sua foto real aqui se quiser -->
+                    <div class="profile-photo" style="background-image: url('https://placeholder.com');"></div>
+                    <div class="vertical-text">Este cartão é pessoal e intransferível</div>
+                    
+                    <div class="card-info">
+                        <div class="student-name">Edmar Elias Barcelos</div>
+                        <div class="student-ra">RA 2026463482</div>
+                        <div class="student-course">ENGENHARIA DE SOFTWARE</div>
+                        <div class="card-footer-data">
+                            <div>CPF: 012.313.306-86</div>
+                            <div>VALIDADE: jun 2027</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VERSO: QR Code -->
+                <div class="unopar-card card-back">
+                    <div class="logo-container">
+                        <span class="logo-u">U</span>
+                        <span class="logo-text">unopar</span>
+                    </div>
+                    <div class="qrcode-container">
+                        <img class="qr-code-placeholder" src="https://qrserver.com" alt="QR Code">
+                        <div class="qr-subtext">Acesse para validação institucional</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tip-tap">💡 Toque no cartão para virar</div>
+
+        <div class="section-title">Carteirinha 2</div>
+        <!-- CARTEIRINHA 2: Matemática -->
+        <div class="unopar-card static-card">
+            <div class="logo-container">
+                <span class="logo-u">U</span>
+                <span class="logo-text">unopar</span>
+            </div>
+            <div class="profile-photo" style="background-image: url('https://placeholder.com');"></div>
+            <div class="vertical-text">Este cartão é pessoal e intransferível</div>
+            
+            <div class="card-info">
+                <div class="student-name" style="color: #60a5fa; font-size: 0.8rem;">EDMAR</div>
+                <div class="student-name">Edmar Elias Barcelos</div>
+                <div class="student-ra">RA 3855767404</div>
+                <div class="student-course">MATEMÁTICA - LICENCIATURA</div>
+                <div class="card-footer-data">
+                    <div>CPF: 012.313.306-86</div>
+                    <div>VALIDADE: JUL a DEZ de 2026</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="disclaimer">
